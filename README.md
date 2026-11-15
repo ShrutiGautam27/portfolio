@@ -76,7 +76,16 @@ API is rate-limited) and shows your contribution graph via ghchart.rshah.org. No
 - Content is never hidden if JavaScript fails — reveal start-states only apply once motion support is confirmed.
 - Skip link, visible focus states, keyboard-trappable mobile menu (Esc to close), labelled icon links.
 
-## Deploying to GitHub Pages
+## Live site & deploying
 
-`vite.config.js` uses `base: './'`, so the `dist/` folder works from any sub-path. Build, then publish `dist/`
-(for example with the `gh-pages` package or a GitHub Actions Pages workflow).
+Live at **https://shrutigautam27.github.io/portfolio/** (GitHub Pages, served from the `gh-pages` branch).
+
+To publish changes:
+
+```bash
+git add -A && git commit -m "Describe the change" && git push
+npm run deploy
+```
+
+The first two commands save the source on `main`; `npm run deploy` builds the site and publishes it. The live site
+updates about a minute later. `vite.config.js` uses `base: './'`, so the build works from any path.

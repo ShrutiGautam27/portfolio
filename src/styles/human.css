@@ -1,0 +1,348 @@
+/* ════════════════════════════════════════════════════════════════
+   HUMAN LAYER — handwritten pen notes, paper grain, the polaroid.
+   The typeset page is the "draft"; these are the margin notes
+   written on top of it by a real person.
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  --f-hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .45 0 0 0 0 .4 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* tactile paper grain on every surface */
+.on-paper,
+.on-ink,
+.work,
+.code {
+  background-image: var(--grain);
+}
+
+/* ── pen notes ─────────────────────────────────────────────────── */
+
+.note {
+  --note-c: var(--accent-ink);
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.2rem;
+  font-family: var(--f-hand);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 1.1rem + 0.6vw, 1.75rem);
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--note-c);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: rotate(var(--r, -3deg));
+}
+.on-ink .note,
+.work--ink .note {
+  --note-c: var(--blush);
+}
+.work--signal .note {
+  --note-c: var(--ink);
+}
+.note__arrow {
+  flex: none;
+  width: 2.6rem;
+  height: 2.5rem;
+}
+.note__arrow path {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 220;
+  vector-effect: non-scaling-stroke;
+}
+.note--right,
+.note--left {
+  align-items: center;
+}
+.note--up-left,
+.note--up-right {
+  align-items: flex-start;
+}
+.motion-ok [data-note] {
+  opacity: 0;
+}
+
+/* hand-drawn underline */
+.split-deco {
+  position: relative;
+  display: inline-block;
+}
+.scribble {
+  position: absolute;
+  left: -2%;
+  bottom: -0.12em;
+  width: 104%;
+  height: 0.28em;
+  overflow: visible;
+  pointer-events: none;
+}
+.scribble path {
+  stroke: var(--accent-soft);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 700;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ── hero notes ────────────────────────────────────────────────── */
+
+.hero__name {
+  position: relative;
+}
+.hero__hello {
+  bottom: calc(100% - 0.05em);
+  left: 0.15em;
+  font-size: clamp(1.6rem, 1.1rem + 1.4vw, 2.5rem);
+}
+.hero__hello .note__arrow {
+  margin-bottom: -1.4rem;
+}
+.hero__ctas {
+  position: relative;
+}
+.hero__start {
+  right: 0.5rem;
+  bottom: calc(100% + 0.25rem);
+}
+.hero__start .note__arrow {
+  margin-bottom: -1.6rem;
+}
+@media (max-width: 1100px) {
+  .hero__start {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .hero__hello {
+    font-size: 1.6rem;
+    bottom: auto;
+    top: calc(36vh - 2.75rem);
+  }
+}
+
+/* ── about: polaroid + right now ───────────────────────────────── */
+
+.polaroid {
+  position: relative;
+  width: min(100%, 17rem);
+  margin-top: 2.5rem;
+  padding: 0.75rem 0.75rem 0;
+  background: #fbf9f4;
+  box-shadow: 0 1px 2px rgba(59, 15, 24, 0.08), 0 18px 40px -18px rgba(59, 15, 24, 0.35);
+  transform: rotate(-2.5deg);
+  transition: transform 0.6s var(--ease-out);
+}
+.polaroid:hover {
+  transform: rotate(0deg) translateY(-4px);
+}
+.polaroid__tape {
+  position: absolute;
+  top: -0.7rem;
+  left: 50%;
+  width: 5.5rem;
+  height: 1.5rem;
+  background: rgba(244, 165, 28, 0.18);
+  transform: translateX(-50%) rotate(3deg);
+  backdrop-filter: blur(1px);
+}
+.polaroid__photo {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--ink);
+}
+.polaroid__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%; /* keep the face centred in the 4:5 frame */
+}
+.polaroid__empty {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.75rem;
+  height: 100%;
+  color: var(--grey-ink);
+  background-image: radial-gradient(rgba(245, 238, 227, 0.12) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+.polaroid__initials {
+  font-size: 4.5rem;
+  font-variation-settings: 'wdth' 125;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent-soft);
+}
+.polaroid__caption {
+  padding: 0.6rem 0.25rem 0.8rem;
+  font-family: var(--f-hand);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-align: center;
+  color: var(--ink);
+}
+
+.about__now {
+  margin-top: 2.75rem;
+}
+.about__now-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.about__now-title i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(244, 165, 28, 0.15);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.about__now .about__spec {
+  margin-top: 1rem;
+}
+
+.about__how {
+  position: relative;
+  margin-top: clamp(4rem, 8vw, 7rem);
+}
+.about__how-title {
+  color: var(--grey-paper);
+}
+.about__how + .about__highlights {
+  margin-top: 1.25rem;
+}
+.about__how-note {
+  left: 14rem;
+  top: -1.4rem;
+}
+@media (max-width: 899px) {
+  .about__aside {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--gutter);
+    align-items: start;
+  }
+  .about__aside .label {
+    grid-column: 1 / -1;
+  }
+  .polaroid {
+    width: 12rem;
+  }
+  .about__now .about__spec {
+    display: block;
+  }
+}
+@media (max-width: 560px) {
+  .about__aside {
+    display: block;
+  }
+  .polaroid {
+    width: min(70%, 15rem);
+    margin-inline: auto;
+  }
+  .about__how-note {
+    left: auto;
+    right: 0;
+  }
+}
+
+/* ── project notes ─────────────────────────────────────────────── */
+
+.project__scribble {
+  right: 9rem;
+  bottom: calc(100% + 0.4rem);
+}
+.project--flip .project__scribble {
+  right: auto;
+  left: 9rem;
+}
+.project__scribble .note__arrow {
+  margin-bottom: -1.1rem;
+}
+
+/* ── skills / journey / contact notes ──────────────────────────── */
+
+.skills__aside {
+  position: relative;
+}
+.skills__note {
+  position: relative;
+  margin-top: 1.25rem;
+  margin-left: -0.25rem;
+}
+.step__note {
+  position: relative;
+  margin-top: 0.75rem;
+  margin-left: 1.5rem;
+}
+
+.contact__primary {
+  position: relative;
+}
+.contact__note {
+  left: 0.25rem;
+  bottom: calc(100% + 1rem);
+}
+.contact__note .note__arrow {
+  margin-bottom: -0.9rem;
+}
+
+.footer__thanks {
+  font-family: var(--f-hand);
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--accent-soft);
+}
+
+/* ── small warmth upgrades ─────────────────────────────────────── */
+
+/* softer, friendlier buttons with a little lift */
+.btn {
+  border-radius: 2px;
+  transition: color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.btn:not(.btn--ghost):hover {
+  box-shadow: 0 14px 30px -14px rgba(244, 165, 28, 0.6);
+}
+/* blush status dots — the second, quieter accent */
+.hero__status i,
+.about__now-title i,
+.code__live i {
+  background: var(--blush);
+}
+.footer__thanks {
+  color: var(--blush);
+}
+.about__now-title i {
+  box-shadow: 0 0 0 4px rgba(243, 182, 194, 0.35);
+}
+.on-paper .about__now-title i,
+.code__live i {
+  background: #a3202f;
+}
+
+/* highlight rows feel touchable */
+.about__highlights li {
+  transition: background 0.4s;
+}
+.about__highlights li:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+@media (max-width: 760px) {
+  .project__scribble,
+  .project--flip .project__scribble {
+    left: auto;
+    right: 0.25rem;
+    font-size: 1.3rem;
+  }
+}

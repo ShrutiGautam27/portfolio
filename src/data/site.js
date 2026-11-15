@@ -15,7 +15,7 @@ export const site = {
 
   githubUser: 'ShrutiGautam27',
   // Repositories to leave out of the live 'Recent repositories' list (exact names, case-insensitive).
-  hiddenRepos: ['FCS', 'Java-Lab-Manual'],
+  hiddenRepos: ['FCS', 'Java-Lab-Manual', 'portfolio'],
   links: {
     github: 'https://github.com/ShrutiGautam27',
     linkedin: 'https://www.linkedin.com/in/shruti-gautam-758630401/',
